@@ -20,9 +20,8 @@ function App() {
   React.useEffect(() => {
     async function fetchData() {
       try {
-        const [cartResponse, /*favoritesResponse, */ itemsResponse] = await Promise.all([
+        const [cartResponse, itemsResponse] = await Promise.all([
           axios.get('https://6706e52da0e04071d228991c.mockapi.io/cart'),
-          //axios.get('https://6706e52da0e04071d228991c.mockapi.io/favorites'),
           axios.get('https://6706e52da0e04071d228991c.mockapi.io/items'),
         ]);
 
@@ -35,7 +34,6 @@ function App() {
         setIsLoading(false);
   
         setCartItems(cartResponse.data);
-        //setFavorites(favoritesResponse.data);
         setItems(itemsResponse.data);
       } catch (error) {
         alert('Ошибка при запросе данных');
@@ -84,13 +82,11 @@ function App() {
   const onAddToFavorite = async (obj) => {
     try {
       if (favorites.find((favObj) => Number(favObj.id) === Number(obj.id))) {
-        //axios.delete(`https://6706e52da0e04071d228991c.mockapi.io/favorites/${obj.id}`);
         const newFavorites = favorites
           .filter((favCard) => Number(favCard.id) !== Number(obj.id));
         localStorage.setItem("favorites", JSON.stringify(newFavorites));
         setFavorites((prev) => prev.filter((item) => Number(item.id) !== Number(obj.id)));
       } else {
-        //const { data } = await axios.post('https://6706e52da0e04071d228991c.mockapi.io/favorites', obj);
         const newFavorites = [...favorites, obj];
         localStorage.setItem("favorites", JSON.stringify(newFavorites));
         setFavorites((prev) => [...prev, obj]);
@@ -107,10 +103,6 @@ function App() {
 
   const isItemAdded = (id) => {
     return cartItems.some((obj) => Number(obj.parentId) === Number(id));
-  };
-
-  const parsingFavorites = () => {
-    return ;
   };
 
   return (

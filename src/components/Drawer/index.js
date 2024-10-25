@@ -10,17 +10,17 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 function Drawer({ onClose, onRemove, items = [], opened }) {
     const { cartItems, setCartItems, totalPrice } = useCart();
-    const [orderId, setOrderId] = React.useState(null);
+    const [orderId, setOrderId] = React.useState(0);
     const [isOrderComplete, setIsOrderComplete] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
     
     const onClickOrder = async () => {
         try {
             setIsLoading(true);
-            const { data } = axios.post('https://6706e52da0e04071d228991c.mockapi.io/orders', {
-                items: cartItems,
-            });
-            setOrderId(data.id);
+            localStorage.setItem("orders", JSON.stringify(cartItems));
+            let orderIdCounter = orderId;
+            orderIdCounter++;
+            setOrderId(orderIdCounter);
             setIsOrderComplete(true);
             setCartItems([]);
             

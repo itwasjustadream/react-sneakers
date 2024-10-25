@@ -6,9 +6,13 @@ import AppContext from '../../context';
 import styles from './Card.module.scss';
 
 function Card({ id, title, imageUrl, price, onFavorite, onPlus, favorited = false, loading = false }) {
-    const { isItemAdded} = React.useContext(AppContext);
-    const [isFavorite, setIsFavorite] = React.useState(favorited);
+    const { isItemAdded, favorites } = React.useContext(AppContext);
     const obj = { id, parentId: id, title, imageUrl, price };
+    if (favorites.find((favObj) => Number(favObj.id) === Number(obj.id))) {
+        favorited = true;
+    }    
+    const [isFavorite, setIsFavorite] = React.useState(favorited);
+    
 
     const onClickPlus = () => {
         onPlus(obj);

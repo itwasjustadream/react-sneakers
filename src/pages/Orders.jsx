@@ -1,19 +1,17 @@
 import React from 'react';
-import axios from 'axios';
 
 import Card from '../components/Card';
-import AppContext from '../context';
 
 function Orders() {
-    const { onAddToFavorite, onAddToCart } = React.useContext(AppContext);
     const [orders, setOrders] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {
         (async () => {
             try {
-                const { data } = await axios.get('https://6706e52da0e04071d228991c.mockapi.io/orders');
-                setOrders(data.reduce((prev, obj) => [...prev, ...obj.items], []));
+                const newOrders = localStorage.getItem("orders");
+                const parsedOrders = newOrders ? JSON.parse(newOrders) : [];
+                setOrders(parsedOrders);
                 setIsLoading(false);
             } catch(error) {
                 alert('Ошибка при запросе заказов');
