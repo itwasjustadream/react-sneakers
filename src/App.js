@@ -114,7 +114,7 @@ function App() {
 
         <Routes>
           <Route
-            path="/"
+            path={process.env.PUBLIC_URL + '/'} 
             element={
               <Home 
                 items={items}
@@ -130,14 +130,14 @@ function App() {
           />
 
           <Route
-            path="/favorites"
+            path={process.env.PUBLIC_URL + '/favorites'}
             element={
               <Favorites />
             }
           />
 
           <Route
-            path="/orders"
+            path={process.env.PUBLIC_URL + '/orders'} 
             element={
               <Orders />
             }
